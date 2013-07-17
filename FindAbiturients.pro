@@ -16,11 +16,11 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     controller.cpp \
     datasource.cpp \
-    dataresult.cpp
+    datamodel.cpp
 
 HEADERS  += mainwindow.h \
     controller.h \
     datasource.h \
-    dataresult.h
+    datamodel.h
 
 FORMS    += mainwindow.ui

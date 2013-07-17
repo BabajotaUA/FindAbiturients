@@ -1,8 +1,7 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "datasource.h"
-#include <QtCore/QSharedPointer>
+#include "datamodel.h"
 #include <QObject>
 
 class Controller : public QObject
@@ -12,11 +11,13 @@ public:
     explicit Controller(QObject *parent = 0);
     virtual ~Controller() {}
 
-    void addNewSource(QString source);
-    QString showHtmlOutput(int id) const;
+    void addNewSource(const QString &source);
+    QString showCoincidenceCount() const;
+    DataModel *getModel();
+    //QString showHtmlOutput(int id) const;
 
 private:
-    QList<DataSource*> sourceList;
+    DataModel model;
 };
 
 #endif // CONTROLLER_H

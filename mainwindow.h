@@ -18,10 +18,11 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_toolButton_clicked();
-    void on_listWidget_itemClicked(QListWidgetItem *item);
 
-    void on_listWidget_clicked(const QModelIndex &index);
+    void on_addButton_clicked();
+    void on_deleteButton_clicked();
+
+    void on_calculateButton_clicked();
 
 private:
     Ui::MainWindow *ui;

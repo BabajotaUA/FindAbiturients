@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    ui->tableCoincidence->setModel(controller.getModel());
 }
 
 MainWindow::~MainWindow()
@@ -13,7 +15,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_toolButton_clicked()
+void MainWindow::on_addButton_clicked()
 {
     if (ui->lineEdit->text().isEmpty())
         return;
@@ -24,11 +26,12 @@ void MainWindow::on_toolButton_clicked()
     ui->lineEdit->clear();
 }
 
-void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
+void MainWindow::on_deleteButton_clicked()
 {
-
+    ui->listWidget->clear();
 }
-void MainWindow::on_listWidget_clicked(const QModelIndex &index)
+
+void MainWindow::on_calculateButton_clicked()
 {
-    ui->outputBox->setText(controller.showHtmlOutput(index.row()));
+    ui->coincidenceCountOutput->setText(controller.showCoincidenceCount());
 }
