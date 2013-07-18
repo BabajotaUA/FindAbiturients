@@ -5,16 +5,16 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+#include <QDebug>
 
 class DataSource : public QObject
 {
     Q_OBJECT
 public:
-    explicit DataSource(QUrl sourceURL, QObject *parent = nullptr);
-    virtual ~DataSource() {}
+    explicit DataSource(const QUrl &sourceURL, QObject *parent = nullptr);
+    virtual ~DataSource() {qDebug() << "DataSource DELETED";}
 
-    QByteArray getSourceData() const;
-    QByteArray sourceData;
+    char *getSourceData();
 
 signals:
     void replyReceived(QString);
@@ -26,6 +26,7 @@ private slots:
 private:
     QNetworkAccessManager manager;
     QNetworkReply *reply;
+    QByteArray sourceData;
 };
 
 #endif // CONNECTOR_H

@@ -33,5 +33,6 @@ void MainWindow::on_deleteButton_clicked()
 
 void MainWindow::on_calculateButton_clicked()
 {
+    controller.showResults();
     ui->coincidenceCountOutput->setText(controller.showCoincidenceCount());
 }

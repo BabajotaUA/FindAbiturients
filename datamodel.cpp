@@ -1,9 +1,13 @@
 #include "datamodel.h"
+#include <QDebug>
 
 DataModel::DataModel(QObject *parent) :
     QAbstractItemModel(parent)
 {
-
+    qDebug() << "DataModel CREATED";
+    rows = 0;
+    columns = 5;
+    dataItems = QList<DataParser*>();
 }
 
 QModelIndex DataModel::index(int row, int column, const QModelIndex &parent) const
@@ -18,16 +22,20 @@ QModelIndex DataModel::parent(const QModelIndex &child) const
 
 int DataModel::rowCount(const QModelIndex &parent) const
 {
-    return 5;
+    return rows;
 }
 
 int DataModel::columnCount(const QModelIndex &parent) const
 {
-    return parent.column();
+    return columns;
 }
 
 QVariant DataModel::data(const QModelIndex &index, int role) const
 {
+    if (role == Qt::DisplayRole)
+    {
+        return QString("OLOLO") + QString::number(index.row());
+    }
     return QVariant();
 }
 
@@ -48,14 +56,24 @@ QVariant DataModel::headerData(int section, Qt::Orientation orientation, int rol
             return "default";
         }
     }
+
+    return QVariant();
 }
 
 void DataModel::addNewSource(const QString &source)
 {
+    dataItems.append(new DataParser(source, this));
+    //emit dataChanged(createIndex(0,0), createIndex(rows, columns));
+}
 
+void DataModel::parseDataSource()
+{
+    foreach (DataParser* item, dataItems) {
+        item->parseDataSource();
+    }
 }
 
 QString DataModel::getCoincidenceCount() const
 {
-    return "jdfhsjkdfhsjkdf";
+    return dataItems[0]->getSourceTitle();
 }

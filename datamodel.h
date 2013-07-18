@@ -1,6 +1,7 @@
 #ifndef DATAMODEL_H
 #define DATAMODEL_H
 
+#include "dataparser.h"
 #include <QAbstractItemModel>
 
 class DataModel : public QAbstractItemModel
@@ -8,7 +9,7 @@ class DataModel : public QAbstractItemModel
     Q_OBJECT
 public:
     explicit DataModel(QObject *parent = nullptr);
-    virtual ~DataModel() {}
+    virtual ~DataModel() {qDebug() << "DataModel DELETED";}
     
     virtual QModelIndex index(int row, int column, const QModelIndex &parent) const;
     virtual QModelIndex parent(const QModelIndex &child) const;
@@ -18,7 +19,13 @@ public:
     virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
     void addNewSource(const QString &source);
+    void parseDataSource();
     QString getCoincidenceCount() const;
+
+private:
+    QList<DataParser*> dataItems;
+    int rows, columns;
+
 };
 
 #endif // DATAMODEL_H

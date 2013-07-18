@@ -9,12 +9,12 @@ class Controller : public QObject
     Q_OBJECT
 public:
     explicit Controller(QObject *parent = 0);
-    virtual ~Controller() {}
+    virtual ~Controller() {qDebug() << "Controller DELETED";}
 
     void addNewSource(const QString &source);
+    void showResults();
     QString showCoincidenceCount() const;
-    DataModel *getModel();
-    //QString showHtmlOutput(int id) const;
+    DataModel* getModel();
 
 private:
     DataModel model;

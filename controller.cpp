@@ -1,9 +1,9 @@
 #include "controller.h"
-#include <QDebug>
 
 Controller::Controller(QObject *parent) :
     QObject(parent)
 {
+    qDebug() << "Controller CREATED";
 }
 
 void Controller::addNewSource(const QString &source)
@@ -11,17 +11,15 @@ void Controller::addNewSource(const QString &source)
     model.addNewSource(source);
 }
 
-/*QString Controller::showHtmlOutput(int id) const
+void Controller::showResults()
 {
-    return QString::fromLocal8Bit(sourceList[id]->getSourceData().data());
-}*/
-
+    model.parseDataSource();
+}
 
 DataModel* Controller::getModel()
 {
     return &model;
 }
-
 
 QString Controller::showCoincidenceCount() const
 {
