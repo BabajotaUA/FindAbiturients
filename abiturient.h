@@ -7,22 +7,29 @@ class Abiturient : public QObject
 {
     Q_OBJECT
 public:
-    explicit Abiturient(int abiturientId, const QString &abiturientName, const qreal abiturientPT, bool abiturientOOC, bool abiturientU, bool abiturientOA, QObject *parent = nullptr);
+    explicit Abiturient(QObject *parent = nullptr);
 
     QString getNmae() const;
     bool getFlagOutOfCompetition() const;
-    bool getFlagUrgent() const;
+    bool getFlagFirstOfAll() const;
     bool getFlagOriginalAtestat() const;
     qreal getPointsTotal() const;
+    int getId() const;
+
+    void setId(int value);
+    void setName(const QString &val);
+    void setPointsTotal(qreal val);
+    void setFlagOutOfCompetition(bool val);
+    void setFlagFirstOfAll(bool val);
+    void setFlagOriginalAtestat(bool val);
 
 private:
-    QString nmae;
+    QString abiturientNmae;
     qreal pointsTotal;
     int id;
     bool flagOutOfCompetition;
-    bool flagUrgent;
+    bool flagFirstOfAll;
     bool flagOriginalAtestat;
-
 };
 
 #endif // ABITURIENT_H
