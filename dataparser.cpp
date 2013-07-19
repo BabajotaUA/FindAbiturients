@@ -1,4 +1,5 @@
 #include "dataparser.h"
+#include <QtCore/QStringList>
 
 DataParser::DataParser(const QString &source, QObject *parent) :
     QObject(parent)
@@ -32,7 +33,7 @@ void DataParser::parseDataSource()
 
 void DataParser::parseTableRows(int begin, int end, const QString &tableData)
 {
-    auto rowStart = tableData.indexOf("<tr>",begin);
+    auto rowStart = tableData.indexOf("<tr>",begin) + 4;
     auto rowEnd = tableData.indexOf("</tr>",rowStart);
 
     if (rowEnd > end || rowStart == -1 || rowEnd == -1)
@@ -45,21 +46,17 @@ void DataParser::parseTableRows(int begin, int end, const QString &tableData)
 
 void DataParser::setAbiturients(const QString &rowData)
 {
-    QList<QString> tmp;
-    int offset = 0;
-    for (int i = 0; i < 12; ++i) {
-        tmp.append(parseTableColumns(offset, rowData));
-        offset += tmp[i].length() + 9;
-    }
+    QStringList columnValue = parseTableColumns(rowData);
 
     Abiturient* abiturient = new Abiturient(this);
-    abiturient->setId(tmp[0].toInt());
-    abiturient->setName(tmp[1]);
-    if (tmp[9] == "&#43;")
+    abiturient->setId(columnValue[0].toInt());
+    abiturient->setName(columnValue[1]);
+    abiturient->setPointsTotal(columnValue[2].toDouble());
+    if (columnValue[9] == "&#43;")
         abiturient->setFlagOutOfCompetition(true);
-    if (tmp[10] == "&#43;")
+    if (columnValue[10] == "&#43;")
         abiturient->setFlagFirstOfAll(true);
-    if (tmp[11] == "&#43;")
+    if (columnValue[11] == "&#43;")
         abiturient->setFlagOriginalAtestat(true);
     abiturients.append(abiturient);
     qDebug() << abiturient->getId()
@@ -70,10 +67,14 @@ void DataParser::setAbiturients(const QString &rowData)
              << abiturient->getFlagOriginalAtestat();
 }
 
-QString DataParser::parseTableColumns(int begin, const QString &tableData)
+QStringList DataParser::parseTableColumns(const QString &rowData)
 {
-    auto columnStart = tableData.indexOf("<td>",begin) + 4;
-    auto columnEnd = tableData.indexOf("</td>",columnStart);
+    auto columns = rowData.split("<td>", QString::SkipEmptyParts);
+    QStringList result;
 
-    return tableData.mid(columnStart, columnEnd - columnStart);
+    foreach (QString val, columns) {
+        result.append(val.left(val.length()-5));
+    }
+
+    return result;
 }

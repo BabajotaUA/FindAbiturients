@@ -22,7 +22,7 @@ private:
 
     void parseTableRows(int begin, int end, const QString &tableData);
     void setAbiturients(const QString &rowData);
-    QString parseTableColumns(int begin, const QString &tableData);
+    QStringList parseTableColumns(const QString &rowData);
 };
 
 #endif // DATAPARSER_H
