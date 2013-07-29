@@ -6,8 +6,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    ui->tableCoincidence->setModel(controller.getModel());
 }
 
 MainWindow::~MainWindow()
@@ -34,5 +32,6 @@ void MainWindow::on_deleteButton_clicked()
 void MainWindow::on_calculateButton_clicked()
 {
     controller.showResults();
+    ui->tableCoincidence->setModel(controller.getModel());
     ui->coincidenceCountOutput->setText(controller.showCoincidenceCount());
 }

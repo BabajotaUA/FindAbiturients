@@ -1,22 +1,20 @@
-#include "dataparser.h"
+#include "parser.h"
 #include <QtCore/QStringList>
 
-DataParser::DataParser(const QString &source, QObject *parent) :
+Parser::Parser(QObject *parent) :
     QObject(parent)
 {
-    qDebug() << "DataParser CREATED";
-    dataSource = new DataSource(QUrl(source), this);
-    sourceTitle = "Add Link!";
+    qDebug() << "DataParser CREATED" << "attached to:" << parent;
 }
 
-QString DataParser::getSourceTitle() const
+QString Parser::getSourceTitle() const
 {
     return sourceTitle;
 }
 
-void DataParser::parseDataSource()
+void Parser::parseDataSource(DataSource *suorce)
 {
-    QString preparedData = QString::fromLocal8Bit(dataSource->getSourceData());
+    QString preparedData = QString::fromLocal8Bit(suorce->getSourceData());
     if (!preparedData.contains("<title>"))
     {
         sourceTitle = preparedData;
@@ -31,7 +29,7 @@ void DataParser::parseDataSource()
     parseTableRows(0, (tableEnd - tableStart) - 6, preparedTableData);
 }
 
-void DataParser::parseTableRows(int begin, int end, const QString &tableData)
+void Parser::parseTableRows(int begin, int end, const QString &tableData)
 {
     auto rowStart = tableData.indexOf("<tr>",begin) + 4;
     auto rowEnd = tableData.indexOf("</tr>",rowStart);
@@ -44,7 +42,7 @@ void DataParser::parseTableRows(int begin, int end, const QString &tableData)
     parseTableRows(rowEnd, end, tableData);
 }
 
-void DataParser::setAbiturients(const QString &rowData)
+void Parser::setAbiturients(const QString &rowData)
 {
     QStringList columnValue = parseTableColumns(rowData);
 
@@ -67,7 +65,7 @@ void DataParser::setAbiturients(const QString &rowData)
              << abiturient->getFlagOriginalAtestat();
 }
 
-QStringList DataParser::parseTableColumns(const QString &rowData)
+QStringList Parser::parseTableColumns(const QString &rowData)
 {
     auto columns = rowData.split("<td>", QString::SkipEmptyParts);
     QStringList result;

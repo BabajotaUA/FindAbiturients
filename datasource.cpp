@@ -18,9 +18,11 @@ char *DataSource::getSourceData()
 void DataSource::replyFinished()
 {
     sourceData.append(reply->readAll());
+    emit replyReceived();
 }
 
 void DataSource::replyError()
 {
     sourceData.append(reply->errorString());
+    emit replyReceived();
 }

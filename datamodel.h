@@ -1,7 +1,8 @@
 #ifndef DATAMODEL_H
 #define DATAMODEL_H
 
-#include "dataparser.h"
+#include "datasource.h"
+#include "parser.h"
 #include <QAbstractItemModel>
 
 class DataModel : public QAbstractItemModel
@@ -23,7 +24,8 @@ public:
     QString getCoincidenceCount() const;
 
 private:
-    QList<DataParser*> dataItems;
+    QList<DataSource*> dataSources;
+    Parser parser;
     int rows, columns;
 
 };

@@ -111,13 +111,19 @@
          <property name="selectionBehavior">
           <enum>QAbstractItemView::SelectRows</enum>
          </property>
+         <property name="textElideMode">
+          <enum>Qt::ElideLeft</enum>
+         </property>
+         <property name="horizontalScrollMode">
+          <enum>QAbstractItemView::ScrollPerPixel</enum>
+         </property>
          <property name="sortingEnabled">
           <bool>true</bool>
          </property>
-         <attribute name="horizontalHeaderHighlightSections">
+         <property name="cornerButtonEnabled">
           <bool>false</bool>
-         </attribute>
-         <attribute name="horizontalHeaderStretchLastSection">
+         </property>
+         <attribute name="horizontalHeaderCascadingSectionResizes">
           <bool>true</bool>
          </attribute>
          <attribute name="verticalHeaderVisible">

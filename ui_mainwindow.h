@@ -136,9 +136,11 @@ public:
         tableCoincidence->setTabKeyNavigation(true);
         tableCoincidence->setProperty("showDropIndicator", QVariant(false));
         tableCoincidence->setSelectionBehavior(QAbstractItemView::SelectRows);
+        tableCoincidence->setTextElideMode(Qt::ElideLeft);
+        tableCoincidence->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
         tableCoincidence->setSortingEnabled(true);
-        tableCoincidence->horizontalHeader()->setHighlightSections(false);
-        tableCoincidence->horizontalHeader()->setStretchLastSection(true);
+        tableCoincidence->setCornerButtonEnabled(false);
+        tableCoincidence->horizontalHeader()->setCascadingSectionResizes(true);
         tableCoincidence->verticalHeader()->setVisible(false);
         tableCoincidence->verticalHeader()->setHighlightSections(false);
 

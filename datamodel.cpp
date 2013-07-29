@@ -4,10 +4,9 @@
 DataModel::DataModel(QObject *parent) :
     QAbstractItemModel(parent)
 {
-    qDebug() << "DataModel CREATED";
+    qDebug() << "DataModel CREATED" << "attached to:" << parent;
     rows = 0;
-    columns = 5;
-    dataItems = QList<DataParser*>();
+    columns = 1;
 }
 
 QModelIndex DataModel::index(int row, int column, const QModelIndex &parent) const
@@ -43,18 +42,9 @@ QVariant DataModel::headerData(int section, Qt::Orientation orientation, int rol
 {
     if (role == Qt::DisplayRole)
     {
-        switch (section) {
-        case 0:
-            return "one";
-        case 1:
-            return "one";
-        case 2:
-            return "one";
-        case 3:
-            return "one";
-        default:
-            return "default";
-        }
+        if (section == 0)
+            return "Імя";
+        return "Something "+section;//dataItems[section - 1]->getSourceTitle();
     }
 
     return QVariant();
@@ -62,18 +52,25 @@ QVariant DataModel::headerData(int section, Qt::Orientation orientation, int rol
 
 void DataModel::addNewSource(const QString &source)
 {
-    dataItems.append(new DataParser(source, this));
+    beginInsertColumns(QModelIndex(),columns,columns);
+    dataSources.append(new DataSource(source, this));
+    columns++;
     //emit dataChanged(createIndex(0,0), createIndex(rows, columns));
+    endInsertColumns();
+
+    beginInsertRows(QModelIndex(),rows,rows+10);
+    rows += 10;
+    endInsertRows();
 }
 
 void DataModel::parseDataSource()
 {
-    foreach (DataParser* item, dataItems) {
-        item->parseDataSource();
+    foreach (DataSource* item, dataSources) {
+        parser.parseDataSource(item);
     }
 }
 
 QString DataModel::getCoincidenceCount() const
 {
-    return dataItems[0]->getSourceTitle();
+    return "";//dataItems[0]->getSourceTitle();
 }

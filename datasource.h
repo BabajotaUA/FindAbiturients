@@ -17,7 +17,7 @@ public:
     char *getSourceData();
 
 signals:
-    void replyReceived(QString);
+    void replyReceived();
     
 private slots:
     void replyFinished();

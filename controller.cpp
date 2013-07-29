@@ -3,7 +3,7 @@
 Controller::Controller(QObject *parent) :
     QObject(parent)
 {
-    qDebug() << "Controller CREATED";
+    qDebug() << "Controller CREATED" << "attached to:" << parent;
 }
 
 void Controller::addNewSource(const QString &source)

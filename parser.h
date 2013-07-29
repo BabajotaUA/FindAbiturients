@@ -1,23 +1,22 @@
 #ifndef DATAPARSER_H
 #define DATAPARSER_H
 
-#include "datasource.h"
 #include "abiturient.h"
+#include "datasource.h"
 #include <QObject>
 
-class DataParser : public QObject
+class Parser : public QObject
 {
     Q_OBJECT
 public:
-    explicit DataParser(const QString &source, QObject *parent = nullptr);
-    virtual ~DataParser() {qDebug() << "DataParser DELETED";}
+    explicit Parser(QObject *parent = nullptr);
+    virtual ~Parser() {qDebug() << "Parser DELETED";}
 
     QString getSourceTitle() const;
-    void parseDataSource();
+    void parseDataSource(DataSource* suorce);
 
 private:
     QString sourceTitle;
-    DataSource* dataSource;
     QList<Abiturient*> abiturients;
 
     void parseTableRows(int begin, int end, const QString &tableData);
