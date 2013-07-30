@@ -18,13 +18,15 @@ SOURCES += main.cpp\
     datasource.cpp \
     datamodel.cpp \
     abiturient.cpp \
-    parser.cpp
+    parser.cpp \
+    university.cpp
 
 HEADERS  += mainwindow.h \
     controller.h \
     datasource.h \
     datamodel.h \
     abiturient.h \
-    parser.h
+    parser.h \
+    university.h
 
 FORMS    += mainwindow.ui

@@ -3,6 +3,7 @@
 
 #include "datasource.h"
 #include "parser.h"
+#include "university.h"
 #include <QAbstractItemModel>
 
 class DataModel : public QAbstractItemModel
@@ -25,6 +26,7 @@ public:
 
 private:
     QList<DataSource*> dataSources;
+    QList<University*> universities;
     Parser parser;
     int rows, columns;
 

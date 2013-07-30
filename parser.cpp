@@ -7,26 +7,23 @@ Parser::Parser(QObject *parent) :
     qDebug() << "DataParser CREATED" << "attached to:" << parent;
 }
 
-QString Parser::getSourceTitle() const
-{
-    return sourceTitle;
-}
-
-void Parser::parseDataSource(DataSource *suorce)
+University *Parser::parseDataSource(DataSource *suorce)
 {
     QString preparedData = QString::fromLocal8Bit(suorce->getSourceData());
     if (!preparedData.contains("<title>"))
-    {
-        sourceTitle = preparedData;
-        return;
-    }
+        return nullptr;
+
     auto titleStart = preparedData.indexOf("<title>") + 7;
     auto titleEnd = preparedData.indexOf(" - ", titleStart);
-    sourceTitle = preparedData.midRef(titleStart, titleEnd - titleStart).toString();
+
+    University* newUniver = new University(preparedData.mid(titleStart, titleEnd - titleStart), this);
+
     auto tableStart = preparedData.indexOf("<tbody>");
     auto tableEnd = preparedData.indexOf("<thead><tr>", tableStart);
-    QString preparedTableData = preparedData.midRef(tableStart).toString();
+    QString preparedTableData = preparedData.mid(tableStart);
     parseTableRows(0, (tableEnd - tableStart) - 6, preparedTableData);
+
+    return newUniver;
 }
 
 void Parser::parseTableRows(int begin, int end, const QString &tableData)
@@ -56,7 +53,7 @@ void Parser::setAbiturients(const QString &rowData)
         abiturient->setFlagFirstOfAll(true);
     if (columnValue[11] == "&#43;")
         abiturient->setFlagOriginalAtestat(true);
-    abiturients.append(abiturient);
+    //abiturients.append(abiturient);
     qDebug() << abiturient->getId()
              << abiturient->getNmae()
              << abiturient->getPointsTotal()

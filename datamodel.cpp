@@ -66,7 +66,7 @@ void DataModel::addNewSource(const QString &source)
 void DataModel::parseDataSource()
 {
     foreach (DataSource* item, dataSources) {
-        parser.parseDataSource(item);
+        universities.append(parser.parseDataSource(item));
     }
 }
 
